@@ -18,13 +18,11 @@ function removeHoverClass() {
 
 // Activate the clicked menu item and update the URL hash
 function setActiveMenuItem() {
-  // Remove 'active' class from all menu items
+
   menuItems.forEach(item => item.classList.remove("active"));
 
-  // Add 'active' class to the clicked menu item
   this.classList.add("active");
 
-  // Navigate to the section if the href attribute contains a valid hash
   if (this.getAttribute('href').startsWith('#')) {
     window.location.hash = this.getAttribute('href');
   }
@@ -32,7 +30,8 @@ function setActiveMenuItem() {
 
 // Update the active menu item based on the current URL hash
 function navigate() {
-  const currentHash = window.location.hash || "#dashboard"; // Default to Dashboard
+
+  const currentHash = window.location.hash || "#dashboard";
 
   menuItems.forEach(item => {
     if (item.getAttribute('href') === currentHash) {
@@ -47,13 +46,12 @@ function navigate() {
 menuItems.forEach((item) => {
   item.addEventListener("mouseenter", addHoverClass);
   item.addEventListener("mouseleave", removeHoverClass);
-  item.addEventListener("click", setActiveMenuItem); // Attach click event
+  item.addEventListener("click", setActiveMenuItem);
 });
 
-// Set the initial active menu item on page load
+
 navigate();
 
-// Update the active menu item when the URL hash changes
 window.addEventListener("hashchange", navigate);
 
 
@@ -83,7 +81,6 @@ function updateMemberCounts() {
     return acc;
   }, {});
 
-  // Update the member count display for each membership status
   document.getElementById('premiumCount').textContent = counts.premium || 0;
   document.getElementById('goldCount').textContent = counts.gold || 0;
   document.getElementById('vipEliteCount').textContent = counts['vip/elite'] || 0;
@@ -93,7 +90,7 @@ function updateMemberCounts() {
 // Set the current filter and re-render the members list
 function filterMembers(category) {
   currentFilter = category;
-  renderMembers(); // Re-render based on the current filter
+  renderMembers();
 }
 
 // Render the list of members based on the current filter and search query
@@ -102,14 +99,12 @@ function renderMembers() {
   const itemList = document.getElementById('itemList');
   itemList.innerHTML = '';
 
-  // Apply the current filter and search query to the members list
   const filteredMembers = members.filter(member => {
     const matchesFilter = !currentFilter || member.membership_status === currentFilter;
     const matchesSearch = member.name.toLowerCase().includes(searchQuery);
     return matchesFilter && matchesSearch;
   });
 
-  // Render the filtered members to the UI
   filteredMembers.forEach((member) => {
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -121,18 +116,16 @@ function renderMembers() {
     itemList.appendChild(row);
   });
 }
+
 // Render Recent Members List
 function renderRecentMembers() {
   const members = getMembers();
   const recentMembersTable = document.getElementById('recentMembersTable');
 
-  // Clear the current list of recent members
   recentMembersTable.innerHTML = '';
 
-  // Sort members by timestamp, showing the most recent first
   const sortedMembers = members.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-  // Render the sorted list of recent members
   sortedMembers.forEach((member) => {
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -156,16 +149,13 @@ async function loadInitialData() {
     }
     const data = await response.json();
 
-    // Assign unique IDs and timestamps to each member
     data.forEach((item, index) => {
-      item.id = index.toString(); // Set unique ID as a string
-      item.timestamp = new Date().toISOString(); // Set default timestamp
+      item.id = index.toString();
+      item.timestamp = new Date().toISOString();
     });
 
-    // Save members to local storage
     localStorage.setItem('members', JSON.stringify(data));
 
-    // Render the members list and update the UI
     renderMembers();
     renderRecentMembers();
     updateMemberCounts();
@@ -191,7 +181,6 @@ function handleMember(isEdit = false) {
   const membershipStatus = document.getElementById('membershipStatus').value;
   const members = getMembers();
 
-  // Validate input: Member name cannot be empty
   if (itemName === '') {
     alert('Name cannot be empty');
     return;
@@ -201,9 +190,7 @@ function handleMember(isEdit = false) {
   const existingIndex = members.findIndex(member => member.id === id);
 
   if (isEdit) {
-    // Edit existing member
     if (existingIndex >= 0) {
-      // Check for duplicate member names, excluding the current member
       const isDuplicate = members.some(member =>
         member.name.toLowerCase() === itemName.toLowerCase() && member.id !== id
       );
@@ -213,12 +200,10 @@ function handleMember(isEdit = false) {
         return;
       }
 
-      // Update member details
       members[existingIndex].name = itemName;
       members[existingIndex].membership_status = membershipStatus;
     }
   } else {
-    // Add a new member
     const isDuplicate = members.some(member =>
       member.name.toLowerCase() === itemName.toLowerCase()
     );
@@ -243,29 +228,27 @@ function handleMember(isEdit = false) {
   document.getElementById('membershipStatus').value = 'premium';
 
   // Save the updated members list and refresh the UI
-  saveMembers(members);
-  renderMembers(); // Re-render the members list, applying any active filters
-  renderRecentMembers(); // Refresh the recent members list
-  updateMemberCounts(); // Update the member counts
 
-  // Close the edit modal
+  saveMembers(members);
+  renderMembers();
+  renderRecentMembers();
+  updateMemberCounts();
+
   document.getElementById('editModal').style.display = 'none';
 }
+
 // Open the Edit Modal for a Specific Member
 function openEditModal(id) {
   const members = getMembers();
   const member = members.find(member => member.id === id);
 
-  // Populate the form with the selected member's details
   document.getElementById('editItemName').value = member.name;
   document.getElementById('editMembershipStatus').value = member.membership_status;
   document.getElementById('editMemberId').value = id;
 
-  // Display the edit modal
   document.getElementById('editModal').style.display = 'block';
 }
 
-// Close the Edit Modal
 document.querySelector('.close').onclick = function () {
   document.getElementById('editModal').style.display = 'none';
 }
@@ -279,7 +262,6 @@ document.getElementById('editForm').onsubmit = function (event) {
   const membershipStatus = document.getElementById('editMembershipStatus').value;
   const members = getMembers();
 
-  // Validate the member's name input
   if (itemName === '') {
     alert('Name cannot be empty');
     return;
@@ -302,12 +284,10 @@ document.getElementById('editForm').onsubmit = function (event) {
     member.membership_status = membershipStatus;
   }
 
-  // Save updated members list and refresh the UI
   saveMembers(members);
   renderMembers();
   updateMemberCounts();
 
-  // Close the edit modal
   document.getElementById('editModal').style.display = 'none';
 };
 
@@ -316,12 +296,10 @@ function deleteMember(id) {
   if (confirm('Are you sure you want to delete this member?')) {
     let members = getMembers();
 
-    // Filter out the member with the specified ID
     members = members.filter(member => member.id !== id);
 
-    // Save updated members list and refresh the UI
     saveMembers(members);
-    renderMembers(); // Apply current filter and search criteria if set
+    renderMembers();
     updateMemberCounts();
   }
 }
@@ -329,7 +307,7 @@ function deleteMember(id) {
 // Display All Members (Remove Filter)
 function showAllMembers() {
   currentFilter = null;
-  renderMembers(); // Show all members without filtering
+  renderMembers();
 }
 
 // Sort Members by the Selected Key
@@ -355,9 +333,8 @@ function sortMembers(sortKey) {
       sortedMembers = members;
   }
 
-  // Save sorted members list and refresh the UI
   saveMembers(sortedMembers);
-  renderMembers(); // Re-render members with the new sort order
+  renderMembers();
 }
 
 // Add Event Listeners to Sort Icons
@@ -382,10 +359,10 @@ document.querySelector('.search input').addEventListener('input', function (even
 // Initialize Application on Document Ready
 document.addEventListener('DOMContentLoaded', () => {
   if (getMembers().length === 0) {
-    loadInitialData(); // Load initial data if no members are found
+    loadInitialData();
   } else {
-    renderMembers(); // Render existing members
-    renderRecentMembers(); // Render the recent members list
-    updateMemberCounts(); // Update member counts
+    renderMembers();
+    renderRecentMembers();
+    updateMemberCounts();
   }
 });
