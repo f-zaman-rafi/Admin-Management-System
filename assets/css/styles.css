@@ -564,6 +564,7 @@ ion-icon[name="logo-electron"] {
   /* Hidden by default */
   align-items: center;
   justify-content: center;
+  z-index: 2000;
 }
 
 .modal-content {
