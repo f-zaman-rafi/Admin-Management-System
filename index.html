@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- =============== Navigation ================ -->
+        <!-- Sidebar navigation menu for quick access to different sections of the dashboard -->
+        <div class="navigation">
+            <ul>
+                <!-- Navigation item for the main page with icon and label -->
+                <li class="logo">
+                    <a href="">
+                        <span class="icon">
+                            <ion-icon name="logo-electron"></ion-icon>
+                        </span>
+                        <span class="title">Ecliptica <span class="sub-title">Tech</span> </span>
+                    </a>
+                </li>
+
+                <!-- Navigation item for the Dashboard section -->
+                <li>
+                    <a href="#dashboard">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- Navigation item for the Members section -->
+                <li>
+                    <a href="#members">
+                        <span class="icon">
+                            <ion-icon name="document-text-outline"></ion-icon>
+                        </span>
+                        <span class="title">Members Info</span>
+                    </a>
+                </li>
+
+                <!-- Navigation item for the Messages section -->
+                <li>
+                    <a href="#messages">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Messages</span>
+                    </a>
+                </li>
+
+                <!-- Navigation item for the Help section -->
+                <li>
+                    <a href="#help">
+                        <span class="icon">
+                            <ion-icon name="help-outline"></ion-icon>
+                        </span>
+                        <span class="title">Help</span>
+                    </a>
+                </li>
+
+                <!-- Navigation item for the Settings section -->
+                <li>
+                    <a href="#settings">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <!-- Navigation item for the Password section -->
+                <li>
+                    <a href="#password">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+
+                <!-- Navigation item for the Sign Out section -->
+                <li>
+                    <a href="#signout">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Dashboard ==================== -->
+
+        <div class="main" id="dashboard">
+
+            <!-- ========================= Top Navigation ==================== -->
+            <!-- The top navigation bar for quick access to menu options, search, and user profile -->
+            <div class="topbar">
+                <!-- Toggle button for collapsing/expanding the sidebar -->
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <!-- Search bar for searching members or content -->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <!-- User profile icon -->
+                <div class="user">
+                    <ion-icon name="person-circle-sharp"></ion-icon>
+                </div>
+            </div>
+
+            <!-- ======================= Card Overview ================== -->
+            <!-- Cards displaying summary information and interactive elements for filtering members -->
+            <div class="cardBox">
+                <!-- Card for premium Members with interactive filter -->
+                <div class="card" onclick="filterMembers('premium')">
+                    <div>
+                        <div class="numbers" id="premiumCount">0</div>
+                        <div class="cardName">premium Members</div>
+                    </div>
+                    <div class="iconBx">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <!-- Card for Gold Members with interactive filter -->
+                <div class="card" onclick="filterMembers('gold')">
+                    <div>
+                        <div class="numbers" id="goldCount">0</div>
+                        <div class="cardName">Gold Members</div>
+                    </div>
+                    <div class="iconBx">
+                        <ion-icon name="people"></ion-icon>
+                    </div>
+                </div>
+
+                <!-- Card for VIP/Elite Members with interactive filter -->
+                <div class="card" onclick="filterMembers('vip/elite')">
+                    <div>
+                        <div class="numbers" id="vipEliteCount">0</div>
+                        <div class="cardName">VIP/Elite Members</div>
+                    </div>
+                    <div class="iconBx">
+                        <ion-icon name="people"></ion-icon>
+                    </div>
+                </div>
+
+                <!-- Card for Lifetime Members with interactive filter -->
+                <div class="card" onclick="filterMembers('lifetime')">
+                    <div>
+                        <div class="numbers" id="lifetimeCount">0</div>
+                        <div class="cardName">Lifetime Members</div>
+                    </div>
+                    <div class="iconBx">
+                        <ion-icon name="people"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================== Members Details ================= -->
+            <!-- Section for displaying and managing member details -->
+            <div class="details">
+                <div class="members">
+                    <!-- Header for the member details section with a "View All" button -->
+                    <div class="cardHeader">
+                        <h2>Members</h2>
+                        <a href="#" class="btn" onclick="showAllMembers()">View All</a>
+                    </div>
+                    <div class="membersDetails">
+                        <!-- Form for adding new members -->
+                        <div class="addMember">
+                            <input type="text" id="itemName" placeholder="Enter name">
+                            <select id="membershipStatus">
+                                <option value="premium">premium</option>
+                                <option value="gold">Gold</option>
+                                <option value="vip/elite">VIP/Elite</option>
+                                <option value="lifetime">Lifetime</option>
+                            </select>
+                            <button onclick="handleMember()">Add</button>
+                        </div>
+
+                        <!-- Table for listing member details with sorting options -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                        <ion-icon name="arrow-up" class="sort-icon" data-sort="name-asc"></ion-icon>
+                                        <ion-icon name="arrow-down" class="sort-icon" data-sort="name-desc"></ion-icon>
+                                    </th>
+                                    <th>
+                                        Membership Status
+                                        <ion-icon name="arrow-up" class="sort-icon" data-sort="status-asc"></ion-icon>
+                                        <ion-icon name="arrow-down" class="sort-icon"
+                                            data-sort="status-desc"></ion-icon>
+                                    </th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemList">
+                                <!-- Table rows will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <!-- Modal for editing member details -->
+                    <div id="editModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h2>Edit Member</h2>
+                            <form id="editForm">
+                                <label for="editItemName">Name:</label> <br>
+                                <input type="text" id="editItemName" name="itemName" required> <br>
+                                <label for="editMembershipStatus">Membership Status:</label><br>
+                                <select id="editMembershipStatus" name="membershipStatus">
+                                    <option value="premium">premium</option>
+                                    <option value="gold">Gold</option>
+                                    <option value="vip/elite">VIP/Elite</option>
+                                    <option value="lifetime">Lifetime</option>
+                                </select>
+                                <input type="hidden" id="editMemberId">
+                                <button type="submit">Save</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ======================== Recent Members ================= -->
+                <!-- Section for displaying a list of recent members -->
+                <div class="recentMembers">
+                    <div class="cardHeader">
+                        <h2>Recent Members</h2>
+                    </div>
+                    <table id="recentMembersTable">
+                        <!-- Table rows for recent members will be dynamically inserted here -->
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ========================= Members ==================== -->
+
+        <div class="main" id="members" style="display: none;">
+            <!-- Members content here -->
+
+            <!-- ========================= Top Nav ==================== -->
+
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <ion-icon name="person-circle-sharp"></ion-icon>
+                </div>
+            </div>
+
+            <!-- ========================= Under Development ==================== -->
+
+            <div class="warning-content">
+                <h1>🚧🌟 Exciting Changes Ahead! 🌟🚧</h1>
+                <img src="./construction.svg" alt="construction SVG">
+                <p>
+                    We’re busy behind the scenes creating something amazing.✨🤩
+                </p>
+                <p>
+                    Hang tight—your new adventure is on its way!⏳🚀
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ========================= Messages ==================== -->
+
+        <div class="main" id="messages" style="display: none;">
+            <!-- Messages content here -->
+
+
+            <!-- ========================= Top Nav ==================== -->
+
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <ion-icon name="person-circle-sharp"></ion-icon>
+                </div>
+            </div>
+
+
+            <!-- ========================= Under Development ==================== -->
+
+            <div class="warning-content">
+                <h1>404: Tech Team on Coffee Break ☕️</h1>
+                <img src="./construction.svg" alt="construction SVG">
+                <p>
+                    Our coders are debugging life choices and brewing the perfect code⌨️<br> The website’s taking a nap
+                    while
+                    we work our digital magic🧹
+                </p>
+                <p>
+                    Thanks for your patience—our techies are fixing things (and maybe their caffeine addiction)!🔗
+                </p>
+
+            </div>
+
+
+        </div>
+
+        <!-- ========================= Help ==================== -->
+
+        <div class="main" id="help" style="display: none;">
+            <!-- Messages content here -->
+
+
+            <!-- ========================= Top Nav ==================== -->
+
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <ion-icon name="person-circle-sharp"></ion-icon>
+                </div>
+            </div>
+
+
+            <!-- ========================= Under Development ==================== -->
+
+            <div class="warning-content">
+                <h1>007: Code Red! ⚠️</h1>
+                <img src="./construction.svg" alt="construction SVG">
+                <p>
+                    Looks like our website’s AI decided to play hide and seek.🔍
+                </p>
+                <p>
+                    We’re debugging and recalibrating to bring everything back online.⚙️🔧 <br> Please be patient while
+                    our
+                    code
+                    wranglers wrestle with the bugs!🕵️‍♂️
+                </p>
+
+            </div>
+
+
+        </div>
+
+        <!-- ========================= Settings ==================== -->
+
+        <div class="main" id="settings" style="display: none;">
+            <!-- Messages content here -->
+
+
+            <!-- ========================= Top Nav ==================== -->
+
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <ion-icon name="person-circle-sharp"></ion-icon>
+                </div>
+            </div>
+
+
+            <!-- ========================= Under Development ==================== -->
+
+            <div class="warning-content">
+                <h1>🛠️ Creativity in Progress... </h1>
+                <img src="./construction.svg" alt="construction SVG">
+                <p>
+                    Our tech team is debugging the awesomeness for you.🌟
+
+
+                </p>
+                <p>
+                    This page is currently under construction 🔧.<br>But don’t worry, it’ll be up and running faster
+                    than
+                    you
+                    can say 'quantum computing!🚀
+                </p>
+
+            </div>
+
+
+        </div>
+
+        <!-- ========================= Password ==================== -->
+
+        <div class="main" id="password" style="display: none;">
+            <!-- Messages content here -->
+
+
+            <!-- ========================= Top Nav ==================== -->
+
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <ion-icon name="person-circle-sharp"></ion-icon>
+                </div>
+            </div>
+
+
+            <!-- ========================= Under Development ==================== -->
+
+            <div class="warning-content">
+                <h1>🔒 Under Lock and Key</h1>
+                <img src="./construction.svg" alt="construction SVG">
+                <p>
+                    Looks like our site is taking a quick nap while we update our password protocols. 🛠️
+                </p>
+                <p>
+                    We're working hard to keep things secure and smooth. Thanks for hanging tight! 🙌
+                </p>
+
+            </div>
+
+
+        </div>
+
+        <!-- ========================= Sign Out ==================== -->
+
+        <div class="main" id="signout" style="display: none;">
+            <!-- Messages content here -->
+
+
+            <!-- ========================= Top Nav ==================== -->
+
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <ion-icon name="person-circle-sharp"></ion-icon>
+                </div>
+            </div>
+
+
+            <!-- ========================= Under Development ==================== -->
+
+            <div class="warning-content">
+                <h1>🚪 Signed Out of Reality</h1>
+                <img src="./construction.svg" alt="construction SVG">
+                <p>
+                    Looks like our website's taking a brief vacation while we tidy up behind the scenes. 🛠️
+                </p>
+                <p>
+                    We’ll be back soon—thanks for your patience while we make everything better! 🌟
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="./main.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- ====== Routing Script ====== -->
+    <script src="./routes.js"></script>
+</body>
+
+</html>
