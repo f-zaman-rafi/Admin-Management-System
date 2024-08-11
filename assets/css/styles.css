@@ -831,4 +831,13 @@ ion-icon[name="logo-electron"] {
     top: 10%;
     left: 0;
   }
+
+  .warning-content h1 {
+    font-size: 20px;
+  }
+
+  .warning-content p {
+    font-size: 14px;
+  }
+
 }
