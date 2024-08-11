@@ -143,7 +143,7 @@ function renderRecentMembers() {
 // Load Initial Data from JSON
 async function loadInitialData() {
   try {
-    const response = await fetch('./data.json');
+    const response = await fetch('../../assets/json/data.json');
     if (!response.ok) {
       throw new Error('Network response was not ok: ' + response.statusText);
     }
