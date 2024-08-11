@@ -560,7 +560,6 @@ ion-icon[name="logo-electron"] {
   left: 40%;
   width: 100%;
   height: 100%;
-  /* background-color: grey; */
   display: none;
   /* Hidden by default */
   align-items: center;
@@ -731,6 +730,11 @@ ion-icon[name="logo-electron"] {
     padding: 10px 0;
   }
 
+  .modal {
+    top: 30%;
+    left: 15%;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -755,6 +759,11 @@ ion-icon[name="logo-electron"] {
   .addMember button {
     width: 100%;
     margin: 8px 0;
+  }
+
+  .modal {
+    top: 25%;
+    left: 20%;
   }
 }
 
@@ -815,5 +824,10 @@ ion-icon[name="logo-electron"] {
 
   .addMember button {
     padding: 8px 15px;
+  }
+
+  .modal {
+    top: 10%;
+    left: 0;
   }
 }
