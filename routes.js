@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Function to display the section corresponding to the current hash
     function navigate() {
         const sections = document.querySelectorAll(".main");
         const currentHash = window.location.hash || "#dashboard"; // Default to Dashboard
