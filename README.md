@@ -1,6 +1,6 @@
 # Admin Management System
 
-This project is an Admin Management System designed to manage and display member information dynamically. It includes functionalities such as adding, editing, deleting, filtering, and searching members. The interface also provides options for sorting members by name and membership status, as well as displaying recent members and updating member counts in real time.
+This Admin Management System is built entirely with HTML, CSS, and Vanilla JavaScript, without relying on any frameworks or libraries. It offers dynamic management and display of member information, including features like adding, editing, deleting, filtering, and searching members. The system also supports sorting by name and membership status, real-time updates to member counts, and a dedicated section for showcasing recent members.
 
 ## Table of Contents
 
